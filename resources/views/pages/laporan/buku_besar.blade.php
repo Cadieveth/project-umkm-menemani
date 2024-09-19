@@ -358,13 +358,13 @@
                                                         <td></td>
                                                         <td>Saldo Awal Harga Pokok Penjualan</td>
                                                         <td colspan="3"></td>
-                                                        <td class="text-danger">
-                                                            {{ $hppAwal ? 'Rp ' . number_format($hppAwal->kredit, 0, ',', '.') : 'Data tidak ditemukan' }}
+                                                        <td class="text-success">
+                                                            {{ 'Rp ' . number_format(0, 0, ',', '.') }}
                                                         </td>
                                                     </tr>
                                                     @php
                                                         // Inisialisasi saldo awal dengan nilai debit dari objek $awalPpj jika tersedia
-                                                        $saldo = $hppAwal ? $hppAwal->kredit : 0;
+                                                        $saldo = 0;
                                                     @endphp
                                                     @foreach ($hpp as $hpp)
                                                         @php

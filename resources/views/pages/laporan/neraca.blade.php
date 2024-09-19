@@ -101,19 +101,30 @@
                                     <span class="text-capitalize"><b>ekuitas</b></span>
                                     <div class="row mb-3">
                                         <div class="col-sm-6">
-                                            <span>Modal</span>
+                                            <span>Modal Awal</span>
                                         </div>
                                         <div class="col-sm-6">
                                             <span>{{ 'Rp ' . number_format($saldoModal, 0, ',', '.') }}</span>
                                         </div>
                                         <div class="col-sm-6">
-                                            <span>Saldo Laba (Rugi)</span>
+                                            @if ($saldoLabaRugi < 0)
+                                                <span>Saldo Rugi</span>
+                                            @else
+                                                <span>Saldo Laba</span>
+                                            @endif
                                         </div>
                                         <div class="col-sm-6">
-                                            <span><u class="mt-2">
-                                                    {{ 'Rp ' . number_format($saldoLabaRugi, 0, ',', '.') }}</u>
-                                                <sub>+</sub>
-                                            </span>
+                                            @if ($saldoLabaRugi < 0)
+                                                <span><u class="mt-2">
+                                                        ({{ 'Rp ' . number_format($saldoLabaRugi, 0, ',', '.') }})
+                                                    </u><sub>+</sub>
+                                                </span>
+                                            @else
+                                                <span><u class="mt-2">
+                                                        {{ 'Rp ' . number_format($saldoLabaRugi, 0, ',', '.') }}
+                                                    </u><sub>+</sub>
+                                                </span>
+                                            @endif
                                         </div>
                                         <div class="col-sm-6">
                                             <span><b>Jumlah</b></span>

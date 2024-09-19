@@ -81,13 +81,7 @@ class LaporanController extends Controller
             ->select('akun_hpp', 'hpp', 'no_jurnal', 'ket', 'created_at')
             ->sum('hpp');
 
-        $hppAwal = NeracaAwal::where('akun_kredit', 'Laba/Rugi')
-            ->select('kredit')
-            ->first();
-
-        $hppAwalValue = $hppAwal ? $hppAwal->kredit : 0; // Pastikan $hppAwal tidak null
-
-        $hpp = $hppAwalValue + $hppOperation; // Melakukan pengurangan antara nilai kredit dan hasil sum
+        $hpp = $hppOperation; // Melakukan pengurangan antara nilai kredit dan hasil sum
 
         $pendapatan = $penjualan - $hpp;
 
@@ -286,13 +280,7 @@ class LaporanController extends Controller
             ->select('akun_hpp', 'hpp', 'no_jurnal', 'ket', 'created_at')
             ->sum('hpp');
 
-        $hppAwal = NeracaAwal::where('akun_kredit', 'Laba/Rugi')
-            ->select('kredit')
-            ->first();
-
-        $hppAwalValue = $hppAwal ? $hppAwal->kredit : 0; // Pastikan $hppAwal tidak null
-
-        $hpp = $hppAwalValue + $hppOperation; // Melakukan pengurangan antara nilai kredit dan hasil sum
+        $hpp = $hppOperation; // Melakukan pengurangan antara nilai kredit dan hasil sum
 
         $pendapatan = $penjualan - $hpp;
         $labaRugi = $pendapatan - $bebanUsaha - $pajak;
@@ -372,9 +360,7 @@ class LaporanController extends Controller
             ->select('akun_hpp', 'hpp', 'no_jurnal', 'ket', 'created_at')
             ->sum('hpp');
 
-        $hppAwal = NeracaAwal::where('akun_kredit', 'Laba/Rugi')
-            ->select('kredit')
-            ->first();
+        $hppAwal = 0;
 
         $hppAwalValue = $hppAwal ? $hppAwal->kredit : 0; // Pastikan $hppAwal tidak null
 
@@ -383,14 +369,10 @@ class LaporanController extends Controller
         $pendapatan = $penjualan - $hpp;
         $labaRugi = $pendapatan - $bebanUsaha - $pajak;
 
-        $labaDitahan = NeracaAwal::where('akun_kredit', 'Laba/Rugi')
-        ->select('kredit')
-        ->first();
-
-        $total = $labaRugi + $labaDitahan->kredit;
+        $total = $labaRugi;
         $modalAkhir = $saldoModal + $total;
 
-        return view('pages.laporan.perubahan_modal', compact('labaDitahan', 'labaRugi', 'saldoModal', 'setting', 'title', 'judul', 'tahun', 'modalAwal', 'labaBersih', 'prive', 'total', 'modalAkhir', 'selectedYear'));
+        return view('pages.laporan.perubahan_modal', compact('labaRugi', 'saldoModal', 'setting', 'title', 'judul', 'tahun', 'modalAwal', 'labaBersih', 'prive', 'total', 'modalAkhir', 'selectedYear'));
     }
 
     public function jurnal_umum(Request $request)
@@ -438,10 +420,6 @@ class LaporanController extends Controller
         $hpp = Laporan::where('akun_hpp', 'HPP')
             ->select('akun_hpp', 'hpp', 'no_jurnal', 'ket', 'created_at')
             ->get();
-
-        $hppAwal = NeracaAwal::where('akun_kredit', 'Laba/Rugi')
-            ->select('kredit')
-            ->first();
 
         // HUTANG GAJI
         $hutang = Laporan::where('akun_debet', 'Hutang Gaji')
@@ -579,6 +557,6 @@ class LaporanController extends Controller
             ->select('debit')
             ->first();
 
-        return view('pages.laporan.buku_besar', compact('btkl', 'awalHutang', 'hutang', 'mergePbb', 'modalAwal', 'setting', 'title', 'judul', 'awalKas', 'awalPpj', 'ppj', 'awalPbb', 'hpps', 'laporans', 'penjualan', 'beli', 'beban', 'masters', 'masterName', 'hpp', 'hppAwal'));
+        return view('pages.laporan.buku_besar', compact('btkl', 'awalHutang', 'hutang', 'mergePbb', 'modalAwal', 'setting', 'title', 'judul', 'awalKas', 'awalPpj', 'ppj', 'awalPbb', 'hpps', 'laporans', 'penjualan', 'beli', 'beban', 'masters', 'masterName', 'hpp'));
     }
 }

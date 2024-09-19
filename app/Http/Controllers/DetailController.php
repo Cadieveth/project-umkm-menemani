@@ -246,52 +246,32 @@ class DetailController extends Controller
     }
 
     private function updateNeracaAwal($ket, $debitChange)
-{
-    $akunDebet = null;
-    if ($ket === "Persediaan Bahan Baku") {
-        $akunDebet = "Persediaan Bahan Baku";
-    } elseif ($ket === "Persediaan Produk Jadi") {
-        $akunDebet = "Persediaan Produk Jadi";
-    }
+    {
+        $akunDebet = null;
+        if ($ket === "Persediaan Bahan Baku") {
+            $akunDebet = "Persediaan Bahan Baku";
+        } elseif ($ket === "Persediaan Produk Jadi") {
+            $akunDebet = "Persediaan Produk Jadi";
+        }
 
-    if ($akunDebet) {
-        // Update existing entry or create new one for debit accounts
-        $neraca = NeracaAwal::where('akun_debet', $akunDebet)->first();
+        if ($akunDebet) {
+            // Update existing entry or create new one for debit accounts
+            $neraca = NeracaAwal::where('akun_debet', $akunDebet)->first();
 
-        if ($neraca) {
-            // Update existing entry
-            $neraca->debit += $debitChange;
-            $neraca->save();
-        } else {
-            // Create new entry if not exist
-            NeracaAwal::create([
-                'akun_debet' => $akunDebet,
-                'debit' => $debitChange,
-                'akun_kredit' => null,
-                'kredit' => 0,
-            ]);
+            if ($neraca) {
+                // Update existing entry
+                $neraca->debit += $debitChange;
+                $neraca->save();
+            } else {
+                // Create new entry if not exist
+                NeracaAwal::create([
+                    'akun_debet' => $akunDebet,
+                    'debit' => $debitChange,
+                    'akun_kredit' => null,
+                    'kredit' => 0,
+                ]);
+            }
         }
     }
-
-    // Kondisi baru untuk Persediaan Produk Jadi
-    if ($ket === "Persediaan Produk Jadi") {
-        // Cari apakah sudah ada entry dengan akun_kredit 'Laba/Rugi'
-        $neracaLabaRugi = NeracaAwal::where('akun_kredit', 'Laba/Rugi')->first();
-
-        if ($neracaLabaRugi) {
-            // Jika entri ada, update kredit dengan menambah nilai debitChange
-            $neracaLabaRugi->kredit -= $debitChange; // Nilai negatif dari debitChange menunjukkan rugi
-            $neracaLabaRugi->save();
-        } else {
-            // Jika entri tidak ada, buat entri baru
-            NeracaAwal::create([
-                'akun_debet' => null,
-                'debit' => 0,
-                'akun_kredit' => 'Laba/Rugi',
-                'kredit' => -$debitChange, // Nilai negatif dari debitChange menunjukkan rugi
-            ]);
-        }
-    }
-}
 
 }

@@ -185,21 +185,6 @@
                                             </span>
                                         </div>
                                         <div class="col-sm-6">
-                                            <span>Laba / Rugi</span>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <span>
-                                                <span><u>
-                                                        @if ($saldoLR)
-                                                            <span>{{ 'Rp ' . number_format($saldoLR, 0, ',', '.') }}</span>
-                                                        @else
-                                                            <span>{{ 'Rp ' . number_format(0, 0, ',', '.') }}</span>
-                                                        @endif
-                                                        <sub>+</sub>
-                                                    </u></span>
-                                            </span>
-                                        </div>
-                                        <div class="col-sm-6">
                                             <span><b>Jumlah</b></span>
                                         </div>
                                         <div class="col-sm-6">
@@ -211,6 +196,12 @@
                                                 @endif
                                             </span>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-6 invisible">
+                                        <span>Laba / Rugi</span>
+                                    </div>
+                                    <div class="col-sm-6 invisible">
+                                        <span></span>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-sm-6">

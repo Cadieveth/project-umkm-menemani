@@ -27,10 +27,13 @@
                         </div>
                         <div class="card-body mx-5">
                             <div class="row mb-3">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <span>Modal Awal</span>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
+                                    <span></span>
+                                </div>
+                                <div class="col-sm-4">
                                     <span>{{ 'Rp ' . number_format($saldoModal, 0, ',', '.') }}</span>
                                 </div>
                             </div>
@@ -45,18 +48,26 @@
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <span>Laba ditahan (Saldo Awal)</span>
+                                    <span>Prive</span>
                                 </div>
-                                <div class="col-sm-6 ">
-                                    <span>{{ 'Rp ' . number_format($labaDitahan->kredit, 0, ',', '.') }}</span>
+                                <div class="col-sm-6">
+                                    <span></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span>Laba ditahan</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span></span>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <span>Total</span>
                                 </div>
-
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
+                                    <span></span>
+                                </div>
+                                <div class="col-sm-4">
                                     <span><u class="mt-2">
                                             <b>{{ 'Rp ' . number_format($total, 0, ',', '.') }}</b></u>
                                         <sub>-</sub>
@@ -64,10 +75,13 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <span><b>Modal Akhir</b></span>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
+                                    <span></span>
+                                </div>
+                                <div class="col-sm-4">
                                     <span><b>{{ 'Rp ' . number_format($modalAkhir, 0, ',', '.') }}</b></span>
                                 </div>
                             </div>
