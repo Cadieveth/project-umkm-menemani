@@ -96,8 +96,7 @@
                             } ?>" href="{{ route('product') }}">Stok Barang</a>
                             <a class="collapse-item <?php if ($title == 'Product - Barang Masuk') {
                                 echo 'active';
-                            } ?>" href="{{ route('product.masuk') }}">Barang
-                                Masuk</a>
+                            } ?>" href="{{ route('product.masuk') }}">Pembelian</a>
                             <a class="collapse-item <?php if ($title == 'Product - Barang Keluar') {
                                 echo 'active';
                             } ?>" href="{{ route('product.keluar') }}">Barang
@@ -177,7 +176,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item <?php if ($title == 'Transaksi') {
                                 echo 'active';
-                            } ?>" href="{{ route('transaksi') }}">Transaksi</a>
+                            } ?>" href="{{ route('transaksi') }}">Penjualan</a>
                             <a class="collapse-item <?php if ($title == 'Transaksi - Kas Keluar') {
                                 echo 'active';
                             } ?>" href="{{ route('kas') }}">Kas Keluar</a>

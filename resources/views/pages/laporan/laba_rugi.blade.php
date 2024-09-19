@@ -10,11 +10,14 @@
                 <div class="card-header">
                     <div class="input-group flex-nowrap w-25">
                         <select id="tahun" name="tahun" class="btn btn-primary">
-                            <option selected disabled class="text-white">-- Pilih Tahun --</option>
-                            @foreach ($tahun as $tahunItem)
-                                <option value="{{ $tahunItem }}">{{ $tahunItem }}</option>
+                            <option selected disabled class="text-white">-- Pilih Bulan dan Tahun --</option>
+                            @foreach ($options as $key => $value)
+                                <option value="{{ $key }}" {{ $selected == $key ? 'selected' : '' }}>
+                                    {{ $value }}
+                                </option>
                             @endforeach
                         </select>
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -22,7 +25,7 @@
                         <div class="card-header text-center">
                             <h6 class="text-uppercase"><b>{{ $setting->company_name }}</b></h6>
                             <h6 class="text-capitalize"><b>laporan laba rugi</b></h6>
-                            <h6 class="text-capitalize"><b>Periode Akhir Desember <span>{{ $selectedYear }}</span></b></h6>
+                            <h6 class="text-capitalize"><b>Periode {{ $selected }}</b></h6>
                         </div>
                         <div class="card-body mx-5">
                             <span class="text-capitalize"><b>pendapatan</b></span>
@@ -90,6 +93,18 @@
         </div>
     </form>
 
+    {{-- <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Ambil elemen dropdown tahun
+            var dropdownTahun = document.getElementById('tahun');
+
+            // Tambahkan event listener untuk perubahan nilai dropdown
+            dropdownTahun.addEventListener('change', function() {
+                // Submit form saat nilai dropdown berubah
+                this.closest('form').submit();
+            });
+        });
+    </script> --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Ambil elemen dropdown tahun

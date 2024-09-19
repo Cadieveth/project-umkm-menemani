@@ -10,20 +10,34 @@
             <div class="card shadow ">
                 <div class="card-header">
                     <div class="input-group flex-nowrap w-25">
-                        <select id="tahun" name="tahun" class="btn btn-primary">
+                        {{-- <select id="tahun" name="tahun" class="btn btn-primary">
                             <option selected disabled class="text-white">-- Pilih Tahun --</option>
                             @foreach ($tahun as $tahunItem)
                                 <option value="{{ $tahunItem }}">{{ $tahunItem }}</option>
+                            @endforeach
+                        </select> --}}
+                        <select id="bulan_tahun" name="bulan_tahun" class="btn btn-primary ml-2">
+                            <option selected disabled class="text-white">-- Pilih Bulan --</option>
+                            @foreach ($bulanTahun as $item)
+                                <option value="{{ $item->bulanTahun }}"
+                                    {{ $selectedBulanTahun == $item->bulanTahun ? 'selected' : '' }}>
+                                    {{ $item->bulanTahun }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="card">
-                        <div class="card-header text-center">
+                        {{-- <div class="card-header text-center">
                             <h6 class="text-uppercase "><b>{{ $setting->company_name }}</b></h6>
                             <h6 class="text-capitalize"><b>laporan Perubahan modal</b></h6>
                             <h6 class="text-capitalize"><b>Periode Akhir Desember {{ $selectedYear }}</b></h6>
+                        </div> --}}
+                        <div class="card-header text-center">
+                            <h6 class="text-uppercase"><b>{{ $setting->company_name }}</b></h6>
+                            <h6 class="text-capitalize"><b>laporan Perubahan modal</b></h6>
+                            <h6 class="text-capitalize"><b>Periode Akhir {{ $selectedBulanTahun }}</b></h6>
                         </div>
                         <div class="card-body mx-5">
                             <div class="row mb-3">
@@ -92,13 +106,25 @@
             </div>
         </div>
     </form>
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Ambil elemen dropdown tahun
             var dropdownTahun = document.getElementById('tahun');
 
             // Tambahkan event listener untuk perubahan nilai dropdown
             dropdownTahun.addEventListener('change', function() {
+                // Submit form saat nilai dropdown berubah
+                this.closest('form').submit();
+            });
+        });
+    </script> --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Ambil elemen dropdown bulan_tahun
+            var dropdownBulanTahun = document.getElementById('bulan_tahun');
+
+            // Tambahkan event listener untuk perubahan nilai dropdown
+            dropdownBulanTahun.addEventListener('change', function() {
                 // Submit form saat nilai dropdown berubah
                 this.closest('form').submit();
             });
