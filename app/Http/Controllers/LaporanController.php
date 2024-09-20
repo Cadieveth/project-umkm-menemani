@@ -120,6 +120,7 @@ class LaporanController extends Controller
 
         // Mengambil data bulan dan tahun yang tersedia
         $bulanTahun = Laporan::select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+            ->whereNotNull('created_at')
             ->distinct()
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')
@@ -129,7 +130,12 @@ class LaporanController extends Controller
                 return $item;
             });
 
-        $selectedBulanTahun = $request->input('bulan_tahun', $bulanTahun->first()->bulanTahun);
+        if($bulanTahun->isNotEmpty()) {
+            $selectedBulanTahun = $request->input('bulan_tahun', $bulanTahun->first()->bulanTahun);
+        } else {
+            $selectedBulanTahun = 'Data tidak tersedia';
+            echo "<script>alert('Data Neraca Tidak Tersedia. Silahkan Tambahkan Data Neraca Awal atau Operasional');</script>";
+        }
 
         list($selectedMonth, $selectedYear) = explode(' ', $selectedBulanTahun);
 
@@ -411,28 +417,30 @@ class LaporanController extends Controller
             DB::raw('MONTH(created_at) as month'),
             DB::raw('YEAR(created_at) as year')
         )
-        ->distinct()
-        ->orderBy('year', 'desc')
-        ->orderBy('month', 'desc')
-        ->get()
-        ->map(function ($item) {
-            // Periksa apakah month dan year memiliki nilai valid
-            if ($item->month && $item->year) {
-                return [
-                    'month' => $item->month,
-                    'year' => $item->year,
-                    'monthYear' => Carbon::create($item->year, $item->month, 1)->format('F Y')
-                ];
-            }
-            return null;
-        })
-        ->filter() // Hapus nilai null jika ada
-        ->unique(function ($item) {
-            return $item['month'] . '-' . $item['year'];
-        })
-        ->sortByDesc(function ($item) {
-            return Carbon::create($item['year'], $item['month'], 1);
-        });
+            ->whereNotNull('created_at') // Tambahkan kondisi untuk memastikan created_at tidak NULL
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get()
+            ->map(function ($item) {
+                // Periksa apakah month dan year memiliki nilai valid
+                if ($item->month && $item->year) {
+                    return [
+                        'month' => $item->month,
+                        'year' => $item->year,
+                        'monthYear' => Carbon::create($item->year, $item->month, 1)->format('F Y')
+                    ];
+                }
+                return null;
+            })
+            ->filter() // Hapus nilai null jika ada
+            ->unique(function ($item) {
+                return $item['month'] . '-' . $item['year'];
+            })
+            ->sortByDesc(function ($item) {
+                return Carbon::create($item['year'], $item['month'], 1);
+            });
+
         // dd($monthsYears);
 
         $options = $monthsYears->pluck('monthYear', 'monthYear');
@@ -440,10 +448,26 @@ class LaporanController extends Controller
         // Menentukan bulan dan tahun yang dipilih dari query parameter
         $selected = $request->input('tahun', $options->keys()->first());
 
-        // Pecah bulan dan tahun yang dipilih
-        $selectedMonthYear = Carbon::createFromFormat('F Y', $selected);
-        $selectedMonth = $selectedMonthYear->month;
-        $selectedYear = $selectedMonthYear->year;
+        // Pecah bulan dan tahun yang dipilih dengan pengecekan format
+        try {
+            // Pastikan nilai $selected dalam format 'F Y'
+            if ($selected && Carbon::hasFormat($selected, 'F Y')) {
+                $selectedMonthYear = Carbon::createFromFormat('F Y', $selected);
+                $selectedMonth = $selectedMonthYear->month;
+                $selectedYear = $selectedMonthYear->year;
+            } else {
+                // Jika tidak sesuai, set bulan dan tahun default (misalnya bulan dan tahun sekarang)
+                $selectedMonthYear = Carbon::now();
+                $selectedMonth = $selectedMonthYear->month;
+                $selectedYear = $selectedMonthYear->year;
+                echo "<script>alert('Data Laba/Rugi Tidak Tersedia. Silahkan Tambahkan Data Neraca Awal atau Operasional');</script>";
+            }
+        } catch (\Exception $e) {
+            // Jika terjadi error, tangani secara elegan, misalnya dengan mengatur nilai default
+            $selectedMonthYear = Carbon::now();
+            $selectedMonth = $selectedMonthYear->month;
+            $selectedYear = $selectedMonthYear->year;
+        }
 
         // Ambil data transaksi berdasarkan bulan dan tahun yang dipilih
         $transaksi = Transaksi::select(
@@ -595,6 +619,7 @@ class LaporanController extends Controller
 
         // Mengambil data bulan dan tahun yang tersedia
         $bulanTahun = Laporan::select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+            ->whereNotNull('created_at')
             ->distinct()
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')
@@ -604,7 +629,15 @@ class LaporanController extends Controller
                 return $item;
             });
 
-        $selectedBulanTahun = $request->input('bulan_tahun', $bulanTahun->first()->bulanTahun);
+            if ($bulanTahun->isNotEmpty()) {
+                $selectedBulanTahun = $request->input('bulan_tahun', $bulanTahun->first()->bulanTahun);
+            } else {
+                // Tangani jika tidak ada data, misalnya menggunakan default value
+                $selectedBulanTahun = 'Data tidak tersedia'; // Atau gunakan nilai default lain yang relevan
+                echo "<script>alert('Data Perubahan Modal Tidak Tersedia. Silahkan Tambahkan data Neraca Awal atau Operasional');</script>";
+            }
+
+        // $selectedBulanTahun = $request->input('bulan_tahun', $bulanTahun->first()->bulanTahun);
 
         list($selectedMonth, $selectedYear) = explode(' ', $selectedBulanTahun);
 
@@ -699,7 +732,13 @@ class LaporanController extends Controller
             'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6,
             'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12
         ];
-        return $months[$monthName];
+        // Periksa apakah nama bulan ada di dalam array
+        if (array_key_exists($monthName, $months)) {
+            return $months[$monthName];
+        }
+
+        // Tangani jika nama bulan tidak ditemukan, bisa mengembalikan null atau nilai default
+        return null; // Atau lemparkan exception jika diperlukan
     }
 
     public function jurnal_umum(Request $request)

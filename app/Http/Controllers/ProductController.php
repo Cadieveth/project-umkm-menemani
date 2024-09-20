@@ -147,10 +147,18 @@ class ProductController extends Controller
         }
 
         $masuk = StokMasuk::findOrFail($request->id);
-        $masuk->produk_id = $request->produk;
+        $bahanBaku = BahanBaku::findOrFail($request->produk);
+
+        if ($bahanBaku->satuan === "Gram") {
+            $stok_masuk = $request->jml_masuk * 1000; // Kalikan dengan 1000 jika satuan adalah Gram
+        } else {
+            $stok_masuk = $request->jml_masuk; // Jika tidak, gunakan nilai jml_masuk langsung
+        }
+
+        $masuk->baku_id = $request->produk;
         $masuk->supplier_id = $request->supplier;
         $masuk->invoice = $request->invoice;
-        $masuk->stok_masuk = $request->jml_masuk;
+        $masuk->stok_masuk = $stok_masuk;
         $masuk->keterangan = $request->keterangan;
 
         $masuk->save();

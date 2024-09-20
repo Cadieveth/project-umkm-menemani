@@ -36,7 +36,7 @@
 
                         </tr>
                     </thead>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
                             <th>#</th>
                             <th>Nama Users</th>
@@ -45,7 +45,7 @@
                             <th>Profile</th>
                             <th>Action</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> --}}
                     <tbody>
                         @foreach ($users as $user)
                             <tr>

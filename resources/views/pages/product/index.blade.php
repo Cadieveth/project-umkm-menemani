@@ -35,7 +35,7 @@
                             <th>Stok Masuk</th>
                             <th>Stok Keluar</th>
                             <th>Terakhir Update</th>
-                            <th>Action</th>
+                            {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
                     {{-- <tfoot>
@@ -87,7 +87,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $produk->updated_at }}</td>
-                                <td><a href="#" data-toggle="modal" data-target="#produkModalEdit"
+                                {{-- <td><a href="#" data-toggle="modal" data-target="#produkModalEdit"
                                         class="btn btn-primary btn-circle btn-sm" data-id="{{ $produk->id }}">
                                         <i class="fas fa-pen"></i>
                                     </a>
@@ -100,7 +100,7 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

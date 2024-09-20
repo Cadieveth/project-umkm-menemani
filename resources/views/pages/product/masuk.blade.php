@@ -223,7 +223,8 @@
                                             <option selected disabled>Pilih Supplier</option>
                                             @foreach ($suppliers as $list)
                                                 <option value="{{ $list->id }}" class="text-capitalize">
-                                                    {{ $list->name }}</option>
+                                                    {{ $list->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <label for="editMasukSupplier">Supplier</label>
@@ -252,7 +253,8 @@
                                             <option selected disabled>Pilih Barang</option>
                                             @foreach ($produks as $pro)
                                                 <option value="{{ $pro->id }}" class="text-capitalize">
-                                                    {{ $pro->nama_barang }}</option>
+                                                    {{ $pro->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <label for="floatingSelect">Nama Barang</label>
@@ -261,7 +263,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
@@ -273,6 +274,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-floating mb-3">
                                         <input type="text"
@@ -284,7 +286,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -295,6 +296,7 @@
                 </form>
             </div>
         </div>
+
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -308,11 +310,21 @@
                     method: 'GET',
                     success: function(data) {
                         $('#editMasukId').val(data.id);
-                        $('#editMasukProduk').val(data.produk_id);
+                        $('#editMasukProduk').val(data
+                        .baku_id); // Set value for select Nama Barang
                         $('#editMasukSupplier').val(data.supplier_id);
                         $('#editMasukInvoice').val(data.invoice);
                         $('#editMasukJml_masuk').val(data.stok_masuk);
                         $('#editMasukKeterangan').val(data.keterangan);
+
+                        // Memilih opsi yang sesuai berdasarkan data.baku_id
+                        $('#editMasukProduk option').removeAttr(
+                        'selected'); // Menghapus 'selected' dari semua option
+                        $('#editMasukProduk option[value="' + data.baku_id + '"]').attr(
+                            'selected', 'selected');
+
+                        // Jika menggunakan Select2, perlu memanggil trigger 'change'
+                        $('#editMasukProduk').trigger('change');
                     }
                 });
             });

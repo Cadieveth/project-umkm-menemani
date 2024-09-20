@@ -213,7 +213,7 @@ class TransaksiController extends Controller
         // Menggabungkan data dari Laporan dan KasKeluar
         $allCashOut = $kass->merge($cashOut)->sortBy('created_at');
 
-        return view('pages.transaksi.kas_keluar', compact('setting', 'title', 'judul', 'allCashOut', 'cashOut', 'masters'));
+        return view('pages.transaksi.kas_keluar', compact('setting', 'title', 'judul', 'allCashOut', 'cashOut', 'masters', 'masterName'));
     }
 
     public function store_kas(Request $request)

@@ -36,7 +36,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
                             <th>#</th>
                             <th>Tanggal</th>
@@ -45,7 +45,7 @@
                             <th>Keterangan</th>
                             <th>Action</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> --}}
                     <tbody>
                         @foreach ($allCashOut as $kas)
                             <tr>
@@ -158,26 +158,36 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="form-floating mb-3">
+                                {{-- <div class="form-floating mb-3">
                                     <select class="form-select form-control @error('nama_barang') is-invalid @enderror"
-                                        aria-label="Floating label select example" id="editAkunDebet" name="akun">
+                                        id="floatingSelect" aria-label="Floating label select example" name="akun">
                                         <option selected disabled>Pilih Akun </option>
-                                        {{-- @foreach ($bakus as $bahan)
-                                            <option value="{{ $bahan->id }}" class="text-capitalize">
-                                                {{ $bahan->name }}</option>
-                                        @endforeach --}}
-                                        <option value="Beban Ongkir" class="text-capitalize">
-                                            Beban Ongkir</option>
-                                        <option value="Beban Admin" class="text-capitalize">
-                                            Beban Admin</option>
-
+                                        @foreach ($masters as $master)
+                                            <option value="{{ $master->name }}" class="text-capitalize">
+                                                {{ $master->name }}</option>
+                                        @endforeach
                                     </select>
                                     <label for="floatingSelect">Pengeluaran</label>
-
+                                </div>
+                                @error('nama_barang')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror --}}
+                                <div class="form-floating mb-3">
+                                    <select class="form-select form-control @error('nama_barang') is-invalid @enderror"
+                                        id="editAkunDebet" aria-label="Floating label select example" name="akun">
+                                        <option disabled>Pilih Akun </option>
+                                        @foreach ($masters as $master)
+                                            <option value="{{ $master->name }}" class="text-capitalize">
+                                                {{ $master->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="editAkunDebet">Pengeluaran</label>
                                 </div>
                                 @error('nama_barang')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12">
@@ -226,6 +236,14 @@
                         $('#editAkunDebet').val(data.akun_debet);
                         $('#editDebit').val(data.debit);
                         $('#editKet').val(data.ket);
+
+                        $('#editAkunDebet option').each(function() {
+                            if ($(this).val() === data.akun_debet) {
+                                $(this).prop('selected', true);
+                            } else {
+                                $(this).prop('selected', false);
+                            }
+                        });
                     }
                 });
             });

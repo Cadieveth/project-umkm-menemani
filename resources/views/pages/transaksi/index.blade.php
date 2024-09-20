@@ -37,7 +37,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
                             <th>#</th>
                             <th>Tanggal</th>
@@ -45,7 +45,7 @@
                             <th>Total </th>
                             <th>Action</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> --}}
                     <tbody>
                         @foreach ($transaksis as $tr)
                             <tr>

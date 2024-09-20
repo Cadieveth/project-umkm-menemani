@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2024 at 12:13 PM
+-- Generation Time: Sep 20, 2024 at 06:20 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -38,15 +38,6 @@ CREATE TABLE `bahan_bakus` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `bahan_bakus`
---
-
-INSERT INTO `bahan_bakus` (`id`, `kode_barang`, `name`, `satuan`, `harga`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(91, 'PRDAWAL50541', 'Jeruk', 'Gram', 10, '2024-09-18 21:45:11', '2024-09-18 21:45:11', NULL),
-(92, 'PRDAWAL93697', 'Botol', 'Unit', 500, '2024-09-18 21:45:36', '2024-09-18 21:45:36', NULL),
-(93, 'PRDGram84201909', 'Jeruk', 'Gram', 20, '2024-09-18 21:46:11', '2024-09-18 21:46:11', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -64,16 +55,6 @@ CREATE TABLE `details` (
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `details`
---
-
-INSERT INTO `details` (`id`, `name`, `kode`, `harga`, `jumlah_stok`, `satuan`, `ket`, `created_at`, `updated_at`) VALUES
-(57, 'Jeruk ABC', 'PRDAWAL10553', 7000, 5, 'PCS', 'Persediaan Produk Jadi', '2024-09-19', '2024-09-19'),
-(58, 'Apel GG', 'PRDAWAL30688', 5000, 5, 'PCS', 'Persediaan Produk Jadi', '2024-09-19', '2024-09-19'),
-(59, 'Jeruk', 'PRDAWAL50541', 10000, 5, 'Gram', 'Persediaan Bahan Baku', '2024-09-19', '2024-09-19'),
-(60, 'Botol', 'PRDAWAL93697', 500, 20, 'Unit', 'Persediaan Bahan Baku', '2024-09-19', '2024-09-19');
 
 -- --------------------------------------------------------
 
@@ -143,20 +124,6 @@ CREATE TABLE `laporans` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `laporans`
---
-
-INSERT INTO `laporans` (`id`, `no_jurnal`, `ket`, `akun_debet`, `debit`, `hpp`, `akun_hpp`, `akun_kredit`, `kredit`, `persediaan`, `akun_persediaan`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(229, 'JU855', 'TRS092024975154', 'Kas', 22050, 21000, 'HPP', 'Penjualan', 22050, 21000, 'Persediaan Barang Jadi', '2024-09-18 21:34:43', '2024-09-18 21:34:43', NULL),
-(230, 'JU406', 'TRS092024685720', 'Kas', 23100, 22000, 'HPP', 'Penjualan', 23100, 22000, 'Persediaan Barang Jadi', '2024-09-18 21:34:56', '2024-09-18 21:34:56', NULL),
-(231, 'JU169', 'TRS092024515772', 'Kas', 7350, 7000, 'HPP', 'Penjualan', 7350, 7000, 'Persediaan Barang Jadi', '2024-09-18 21:35:03', '2024-09-18 21:35:03', NULL),
-(232, 'JU746', 'TRS092024284708', 'Kas', 10500, 10000, 'HPP', 'Penjualan', 10500, 10000, 'Persediaan Barang Jadi', '2024-09-18 21:35:09', '2024-09-18 21:35:09', NULL),
-(233, 'JU446', 'Pembelian Bahan Baku (BM-01)', 'Persediaan Bahan Baku', 100000, NULL, NULL, 'Kas', 100000, NULL, NULL, '2024-09-18 21:46:11', '2024-09-18 21:46:11', NULL),
-(234, 'JU530', 'Produksi Jeruk Peras A1 (SLL58591909)', 'Persediaan Barang Jadi (Jeruk, Botol)', 30000, NULL, NULL, 'Persediaan Bahan Baku', 30000, NULL, NULL, '2024-09-18 21:52:16', '2024-09-18 21:52:16', NULL),
-(235, 'JU530', 'Produksi Jeruk Peras A1 (SLL58591909)', 'Persediaan Barang Jadi (Jeruk, Botol)', 20000, NULL, NULL, 'Hutang Gaji', 20000, NULL, NULL, '2024-09-18 21:52:16', '2024-09-18 21:52:16', NULL),
-(236, 'JU637', 'TRS092024534066', 'Kas', 10500, 10000, 'HPP', 'Penjualan', 10500, 10000, 'Persediaan Barang Jadi', '2024-09-18 21:54:35', '2024-09-18 21:54:35', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -169,13 +136,6 @@ CREATE TABLE `margin` (
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `margin`
---
-
-INSERT INTO `margin` (`id`, `margin`, `created_at`, `updated_at`) VALUES
-(3, 5, '2024-09-19', '2024-09-19');
 
 -- --------------------------------------------------------
 
@@ -191,6 +151,15 @@ CREATE TABLE `masters` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `masters`
+--
+
+INSERT INTO `masters` (`id`, `name`, `kategori`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(7, 'Hutang Gaji', 'Kewajiban', '2024-09-19 11:04:58', '2024-09-19 11:04:58', NULL),
+(8, 'Beban Listrik, Air dan Telepon', 'Beban', '2024-09-19 11:06:25', '2024-09-19 11:06:25', NULL),
+(9, 'Beban Pengiriman', 'Beban', '2024-09-19 11:14:33', '2024-09-19 11:14:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -278,17 +247,6 @@ CREATE TABLE `neraca_awals` (
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `neraca_awals`
---
-
-INSERT INTO `neraca_awals` (`id`, `akun_debet`, `debit`, `akun_kredit`, `kredit`, `created_at`, `updated_at`) VALUES
-(98, 'Kas', 1000000, NULL, NULL, '2024-09-19', '2024-09-19'),
-(99, NULL, NULL, 'Modal', 1000000, '2024-09-19', '2024-09-19'),
-(100, 'Persediaan Produk Jadi', 60000, NULL, 0, '2024-09-19', '2024-09-19'),
-(101, NULL, 0, 'Laba/Rugi', -60000, '2024-09-19', '2024-09-19'),
-(102, 'Persediaan Bahan Baku', 60000, NULL, 0, '2024-09-19', '2024-09-19');
 
 -- --------------------------------------------------------
 
@@ -400,15 +358,6 @@ CREATE TABLE `product_sells` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `product_sells`
---
-
-INSERT INTO `product_sells` (`id`, `no_resep`, `kode_product`, `nama_product`, `hpp`, `overhead`, `bb_keluar`, `qty_in`, `qty_out`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(79, 'RESA092024544953', 'PRDAWAL10553', 'Jeruk ABC', 7000, NULL, NULL, 5, 5, '2024-09-18 21:33:39', '2024-09-18 21:35:03', NULL),
-(80, 'RESA092024491915', 'PRDAWAL30688', 'Apel GG', 5000, NULL, NULL, 5, 5, '2024-09-18 21:34:17', '2024-09-18 21:35:09', NULL),
-(81, 'RES092024464180', 'SLL58591909', 'Jeruk Peras A1', 10000, 5000, 25000, 5, 1, '2024-09-18 21:52:16', '2024-09-18 21:54:35', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -427,14 +376,6 @@ CREATE TABLE `reseps` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `reseps`
---
-
-INSERT INTO `reseps` (`id`, `baku_id`, `no_resep`, `qty`, `nama_resep`, `keterangan`, `instruksi`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(60, '91', 'RES092024464180', 300, 'Jeruk Peras A', '-', '<p>-</p>', '2024-09-18 21:52:04', '2024-09-18 21:52:04', NULL),
-(61, '92', 'RES092024464180', 1, 'Jeruk Peras A', '-', '<p>-</p>', '2024-09-18 21:52:04', '2024-09-18 21:52:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -545,14 +486,6 @@ CREATE TABLE `stok_keluars` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `stok_keluars`
---
-
-INSERT INTO `stok_keluars` (`id`, `baku_id`, `stok_keluar`, `no_dokumen`, `keterangan`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(106, '91', 1500, 'RES092024464180', 'Bahan Baku Produksi Resep', '2024-09-18 21:52:16', '2024-09-18 21:52:16', NULL),
-(107, '92', 5, 'RES092024464180', 'Bahan Baku Produksi Resep', '2024-09-18 21:52:16', '2024-09-18 21:52:16', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -570,15 +503,6 @@ CREATE TABLE `stok_masuks` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `stok_masuks`
---
-
-INSERT INTO `stok_masuks` (`id`, `baku_id`, `supplier_id`, `invoice`, `stok_masuk`, `keterangan`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(89, '91', '4', 'SA89', 5000, 'Saldo Awal', '2024-09-18 21:45:11', '2024-09-18 21:45:11', NULL),
-(90, '92', '4', 'SA31', 20, 'Saldo Awal', '2024-09-18 21:45:36', '2024-09-18 21:45:36', NULL),
-(91, '91', '4', 'BM-01', 5000, '-', '2024-09-18 21:46:11', '2024-09-18 21:46:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -602,7 +526,7 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`id`, `name`, `alamat`, `email`, `kontak`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, 'Ade', 'Kost Rumah Putih', 'adechris212@gmail.com', '0812312312412', '2024-08-29 16:18:10', '2024-08-29 16:18:10', NULL);
+(4, 'Supplier Lama', 'Jl. Tj. Sari No. 41', 'cozyX@gmail.com', '087893424201', '2024-08-29 16:18:10', '2024-09-20 16:16:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -622,18 +546,6 @@ CREATE TABLE `transaksis` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `transaksis`
---
-
-INSERT INTO `transaksis` (`id`, `user_id`, `produk_sell_id`, `no_transaksi`, `harga_barang`, `qty`, `sub_total`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(32, '1', 79, 'TRS092024975154', 7350, 3, 22050, '2024-09-18 21:34:43', '2024-09-18 21:34:43', NULL),
-(33, '1', 79, 'TRS092024685720', 7350, 1, 7350, '2024-09-18 21:34:56', '2024-09-18 21:34:56', NULL),
-(34, '1', 80, 'TRS092024685720', 5250, 3, 15750, '2024-09-18 21:34:56', '2024-09-18 21:34:56', NULL),
-(35, '1', 79, 'TRS092024515772', 7350, 1, 7350, '2024-09-18 21:35:03', '2024-09-18 21:35:03', NULL),
-(36, '1', 80, 'TRS092024284708', 5250, 2, 10500, '2024-09-18 21:35:09', '2024-09-18 21:35:09', NULL),
-(37, '1', 81, 'TRS092024534066', 10500, 1, 10500, '2024-09-18 21:54:35', '2024-09-18 21:54:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -842,7 +754,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bahan_bakus`
 --
 ALTER TABLE `bahan_bakus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `details`
@@ -872,7 +784,7 @@ ALTER TABLE `kas_keluars`
 -- AUTO_INCREMENT for table `laporans`
 --
 ALTER TABLE `laporans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 
 --
 -- AUTO_INCREMENT for table `margin`
@@ -884,7 +796,7 @@ ALTER TABLE `margin`
 -- AUTO_INCREMENT for table `masters`
 --
 ALTER TABLE `masters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -920,13 +832,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `product_sells`
 --
 ALTER TABLE `product_sells`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `reseps`
 --
 ALTER TABLE `reseps`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -944,13 +856,13 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `stok_keluars`
 --
 ALTER TABLE `stok_keluars`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `stok_masuks`
 --
 ALTER TABLE `stok_masuks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
@@ -962,7 +874,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `transaksis`
 --
 ALTER TABLE `transaksis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `users`

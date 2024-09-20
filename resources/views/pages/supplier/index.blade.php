@@ -36,7 +36,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
                             <th>#</th>
                             <th>Nama Supplier</th>
@@ -45,7 +45,7 @@
                             <th>Kontak</th>
                             <th>Action</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> --}}
                     <tbody>
                         @foreach ($suppliers as $sup)
                             <tr>

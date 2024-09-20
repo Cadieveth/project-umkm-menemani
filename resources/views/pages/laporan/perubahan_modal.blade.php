@@ -65,13 +65,13 @@
                                     <span>Prive</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <span></span>
+                                    <span>{{ 'Rp ' . number_format(0, 0, ',', '.') }}</span>
                                 </div>
                                 <div class="col-sm-6">
                                     <span>Laba ditahan</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <span></span>
+                                    <span>{{ 'Rp ' . number_format(0, 0, ',', '.') }}</span>
                                 </div>
                             </div>
                             <div class="row mb-3">

@@ -98,11 +98,11 @@
                                     <select class="form-select form-control @error('satuan') is-invalid @enderror"
                                         id="editProdukSatuan" aria-label="Floating label select example" name="kategori">
                                         <option selected disabled>Pilih Kategori</option>
-                                        <option value="Aktiva Lancar">Aktiva Lancar</option>
-                                        <option value="Aktiva Tetap">Aktiva Tetap</option>
+                                        {{-- <option value="Aktiva Lancar">Aktiva Lancar</option>
+                                        <option value="Aktiva Tetap">Aktiva Tetap</option> --}}
                                         <option value="Kewajiban">Kewajiban</option>
-                                        <option value="Ekuitas">Ekuitas</option>
-                                        <option value="Pendapatan">Pendapatan</option>
+                                        {{-- <option value="Ekuitas">Ekuitas</option>
+                                        <option value="Pendapatan">Pendapatan</option> --}}
                                         <option value="Beban">Beban</option>
                                     </select>
                                     <label for="editProdukSatuan">Kategori</label>
@@ -154,11 +154,11 @@
                                     <select class="form-select form-control @error('satuan') is-invalid @enderror"
                                         id="editKategori" aria-label="Floating label select example" name="kategori">
                                         <option selected disabled>Pilih Kategori</option>
-                                        <option value="Aktiva Lancar">Aktiva Lancar</option>
-                                        <option value="Aktiva Tetap">Aktiva Tetap</option>
+                                        {{-- <option value="Aktiva Lancar">Aktiva Lancar</option>
+                                        <option value="Aktiva Tetap">Aktiva Tetap</option> --}}
                                         <option value="Kewajiban">Kewajiban</option>
-                                        <option value="Ekuitas">Ekuitas</option>
-                                        <option value="Pendapatan">Pendapatan</option>
+                                        {{-- <option value="Ekuitas">Ekuitas</option>
+                                        <option value="Pendapatan">Pendapatan</option> --}}
                                         <option value="Beban">Beban</option>
                                     </select>
                                     <label for="editProdukSatuan">Kategori</label>

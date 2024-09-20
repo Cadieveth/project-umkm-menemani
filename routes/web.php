@@ -127,7 +127,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('masuk', [ProductController::class, 'masuk'])->name('product.masuk');
         Route::post('/masuk_add', [ProductController::class, 'masuk_store'])->name('add.masuk');
         Route::get('/masuk/{id}/edit', [ProductController::class, 'edit_masuk'])->name('edit.masuk');
-        Route::put('/masuk', [ProductController::class, 'update_masuk'])->name('update.masuk');
+        Route::put('/masuk/update', [ProductController::class, 'update_masuk'])->name('update.masuk');
         Route::delete('/masuk/delete/{id}', [ProductController::class, 'destroy_masuk'])->name('delete.masuk');
 
         //Produk Keluar

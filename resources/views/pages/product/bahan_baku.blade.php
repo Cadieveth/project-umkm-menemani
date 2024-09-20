@@ -99,11 +99,11 @@
                                     <select class="form-select form-control @error('satuan') is-invalid @enderror"
                                         id="floatingSelect" aria-label="Floating label select example" name="satuan">
                                         <option selected disabled>Pilih Satuan</option>
-                                        <option value="L">Liter</option>
-                                        <option value="KG">KG</option>
-                                        <option value="GR">Gram</option>
+                                        <option value="Liter">Liter</option>
+                                        {{-- <option value="KG">KG</option> --}}
+                                        <option value="Gram">Gram</option>
                                         <option value="PCS">PCS</option>
-                                        <option value="UNIT">Unit</option>
+                                        <option value="Unit">Unit</option>
                                     </select>
                                     <label for="floatingSelect">Satuan</label>
                                 </div>
@@ -154,11 +154,11 @@
                                     <select class="form-select form-control @error('satuan') is-invalid @enderror"
                                         id="editSatuan" aria-label="Floating label select example" name="satuan">
                                         <option selected disabled>Pilih Satuan</option>
-                                        <option value="L">Liter</option>
-                                        <option value="KG">KG</option>
-                                        <option value="GR">Gram</option>
+                                        <option value="Liter">Liter</option>
+                                        {{-- <option value="KG">KG</option> --}}
+                                        <option value="Gram">Gram</option>
                                         <option value="PCS">PCS</option>
-                                        <option value="UNIT">Unit</option>
+                                        <option value="Unit">Unit</option>
                                     </select>
                                     <label for="floatingSelect">Satuan</label>
                                 </div>
