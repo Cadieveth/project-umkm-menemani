@@ -22,6 +22,7 @@ class NeracaAwalController extends Controller
         $saldoKas = NeracaAwal::where('akun_debet', 'Kas')->sum('debit');
         $saldoPBB = NeracaAwal::where('akun_debet', 'Persediaan Bahan Baku')->sum('debit');
         $saldoPPJ = NeracaAwal::where('akun_debet', 'Persediaan Produk Jadi')->sum('debit');
+        $saldoAset = NeracaAwal::where('akun_debet', 'Peralatan')->sum('debit');
 
         // Query untuk mendapatkan saldo Liabilitas dan Ekuitas
         $saldoHutangGaji = NeracaAwal::where('akun_kredit', 'Hutang Gaji')->sum('kredit');
@@ -31,13 +32,13 @@ class NeracaAwalController extends Controller
         $totalPersediaan = $saldoPBB + $saldoPPJ;
         $totalLiabilitas = $saldoHutangGaji;
 
-        $totalAktiva = $totalSaldoKas;
+        $totalAktiva = $totalSaldoKas + $saldoAset;
 
         $totalModal = ($totalAktiva - $totalLiabilitas);
         $totalEkuitas = $totalModal;
         $totalLiabilitasDanEkuitas = $totalLiabilitas + $totalEkuitas;
 
-        return view('pages.laporan.neraca_awal', compact('setting', 'title', 'judul', 'NeracaAwal', 'saldoKas', 'saldoPBB', 'saldoPPJ', 'saldoHutangGaji', 'saldoModal', 'totalSaldoKas', 'totalPersediaan', 'totalLiabilitas', 'totalEkuitas', 'totalAktiva', 'totalLiabilitasDanEkuitas', 'totalModal'));
+        return view('pages.laporan.neraca_awal', compact('setting', 'title', 'judul', 'NeracaAwal', 'saldoKas', 'saldoPBB', 'saldoPPJ', 'saldoHutangGaji', 'saldoModal', 'totalSaldoKas', 'totalPersediaan', 'totalLiabilitas', 'totalEkuitas', 'totalAktiva', 'totalLiabilitasDanEkuitas', 'totalModal', 'saldoAset'));
     }
 
     public function store(Request $request)

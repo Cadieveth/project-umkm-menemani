@@ -36,6 +36,12 @@
                                             data-target="#pills-beli" type="button" role="tab"
                                             aria-controls="pills-beli" aria-selected="false">Produk Jadi</button>
                                     </li>
+                                    {{-- Aset --}}
+                                    <li class="nav-item mr-3" role="presentation">
+                                        <button class="nav-link btn-sm" id="pills-aset-tab" data-toggle="pill"
+                                            data-target="#pills-aset" type="button" role="tab"
+                                            aria-controls="pills-aset" aria-selected="false">Peralatan</button>
+                                    </li>
                                     {{-- Penjualan  --}}
                                     <li class="nav-item mr-3" role="presentation">
                                         <button class="nav-link btn-sm" id="pills-profile-tab" data-toggle="pill"
@@ -59,6 +65,13 @@
                                         <button class="nav-link btn-sm" id="pills-hg-tab" data-toggle="pill"
                                             data-target="#pills-hg" type="button" role="tab" aria-controls="pills-hg"
                                             aria-selected="false">Hutang</button>
+                                    </li>
+                                    {{-- Hutang Gaji --}}
+                                    <li class="nav-item mr-3" role="presentation">
+                                        <button class="nav-link btn-sm" id="pills-akm-tab" data-toggle="pill"
+                                            data-target="#pills-akm" type="button" role="tab"
+                                            aria-controls="pills-akm" aria-selected="false">Akm. Penyusutan
+                                            Peralatan</button>
                                     </li>
                                     {{-- BTKL --}}
                                     {{-- <li class="nav-item" role="presentation">
@@ -339,6 +352,76 @@
 
                                             </table>
                                         </div>
+                                        {{-- persediaan produk jadi  --}}
+                                        <div class="tab-pane fade" id="pills-aset" role="tabpanel"
+                                            aria-labelledby="pills-aset-tab">
+                                            <table class="table table-responsive-lg">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th scope="col">Tanggal</th>
+                                                        <th scope="col">Keterangan</th>
+                                                        <th scope="col">Referensi</th>
+                                                        <th scope="col">Debit</th>
+                                                        <th scope="col">Kredit</th>
+                                                        <th scope="col">Saldo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Tampilkan Saldo Awal Persediaan Produk Jadi -->
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>Saldo Awal Peralatan</td>
+                                                        <td colspan="3"></td>
+                                                        <td class="text-success">
+                                                            {{ $awalAset ? 'Rp ' . number_format($awalAset->debit, 0, ',', '.') : 'Data tidak ditemukan' }}
+                                                        </td>
+                                                    </tr>
+                                                    @php
+                                                        // Inisialisasi saldo awal dengan nilai debit dari objek $awalPpj jika tersedia
+                                                        $saldo = $awalAset ? $awalAset->debit : 0;
+                                                    @endphp
+                                                    {{-- @foreach ($ppj as $dataPpj)
+                                                        @php
+                                                            // Tentukan apakah debit atau kredit menggunakan pengecekan yang lebih fleksibel
+                                                            $isDebit = str_contains(
+                                                                $dataPpj->akun_debet,
+                                                                'Persediaan Barang Jadi',
+                                                            );
+                                                            $isKredit = str_contains(
+                                                                $dataPpj->akun_persediaan,
+                                                                'Persediaan Barang Jadi',
+                                                            );
+
+                                                            // Perbarui saldo berdasarkan apakah entri adalah debit atau kredit
+                                                            if ($isDebit) {
+                                                                $saldo += $dataPpj->debit;
+                                                                $color = 'text-success';
+                                                            } elseif ($isKredit) {
+                                                                $saldo -= $dataPpj->persediaan; // Menggunakan $dataPpj->persediaan
+                                                                $color = 'text-danger';
+                                                            }
+                                                        @endphp
+
+                                                        <tr>
+                                                            <td>{{ date('d/M/Y', strtotime($dataPpj->created_at)) }}</td>
+                                                            <td>{{ $dataPpj->ket }}</td>
+                                                            <td>{{ $dataPpj->no_jurnal }}</td>
+                                                            <td class="{{ $color }}">
+                                                                {{ $isDebit ? 'Rp ' . number_format($dataPpj->debit, 0, ',', '.') : '-' }}
+                                                            </td>
+                                                            <td class="{{ $color }}">
+                                                                {{ $isKredit ? 'Rp ' . number_format($dataPpj->persediaan, 0, ',', '.') : '-' }}
+                                                            </td>
+                                                            <td class="{{ $saldo < 0 ? 'text-danger' : 'text-success' }}">
+                                                                {{ 'Rp ' . number_format($saldo, 0, ',', '.') }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach --}}
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
                                         {{-- hpp  --}}
                                         <div class="tab-pane fade" id="pills-hpp" role="tabpanel"
                                             aria-labelledby="pills-hpp-tab">
@@ -431,7 +514,7 @@
                                                         @endphp
                                                         <tr>
                                                             <td>{{ date('d/M/Y', strtotime($lap->created_at)) }}</td>
-                                                            <td>{{ $lap->ket }}</td>
+                                                            <td>{{ $lap->akun_debet }}</td>
                                                             <td>{{ $lap->no_jurnal }}</td>
                                                             <td class="{{ $color }}">
                                                                 {{ 'Rp ' . number_format($lap->debit, 0, ',', '.') }}
@@ -492,6 +575,68 @@
                                                                     {{ 'Rp ' . number_format($data->kredit, 0, ',', '.') }}
                                                                 </td>
                                                             @elseif ($data->akun_debet == 'Hutang Gaji')
+                                                                <td class="{{ $color }}">
+                                                                    {{ 'Rp ' . number_format($data->debit, 0, ',', '.') }}
+                                                                </td>
+                                                                <td>Rp 0</td>
+                                                            @endif
+                                                            <td class="{{ $color }}">
+                                                                {{ 'Rp ' . number_format($modalAwal, 0, ',', '.') }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {{-- hutang  --}}
+                                        <div class="tab-pane fade" id="pills-akm" role="tabpanel"
+                                            aria-labelledby="pills-akm-tab">
+                                            <table class="table table-responsive-lg">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th scope="col">Tanggal</th>
+                                                        <th scope="col">Keterangan</th>
+                                                        <th scope="col">Referensi</th>
+                                                        <th scope="col">Debit</th>
+                                                        <th scope="col">Kredit</th>
+                                                        <th scope="col">Saldo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $modalAwal = 0;
+                                                    @endphp
+
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>Saldo Awal Akm. Penyusutan Peralatan</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            {{ 'Rp ' . number_format($modalAwal, 0, ',', '.') }}</td>
+                                                    </tr>
+                                                    @foreach ($akm as $data)
+                                                        @php
+                                                            if (
+                                                                $data->akun_kredit == 'Akumulasi Penyusutan Peralatan'
+                                                            ) {
+                                                                $modalAwal += $data->kredit;
+                                                                $color = 'text-success';
+                                                            } else {
+                                                                $modalAwal -= $data->debit;
+                                                                $color = 'text-danger';
+                                                            }
+                                                        @endphp
+                                                        <tr>
+                                                            <td>{{ date('d/M/Y', strtotime($data->created_at)) }}</td>
+                                                            <td>{{ $data->ket }}</td>
+                                                            <td>{{ $data->no_jurnal }}</td>
+                                                            @if ($data->akun_kredit == 'Akumulasi Penyusutan Peralatan')
+                                                                <td>Rp 0</td>
+                                                                <td class="{{ $color }}">
+                                                                    {{ 'Rp ' . number_format($data->kredit, 0, ',', '.') }}
+                                                                </td>
+                                                            @elseif ($data->akun_debet == 'Akumulasi Penyusutan Peralatan')
                                                                 <td class="{{ $color }}">
                                                                     {{ 'Rp ' . number_format($data->debit, 0, ',', '.') }}
                                                                 </td>

@@ -16,6 +16,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\NeracaAwalController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\AsetController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -113,6 +114,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/detail_saldo/{id}/edit', [DetailController::class, 'edit'])->name('edit.detail_saldo');
         Route::put('/detail_saldo', [DetailController::class, 'update'])->name('update.detail_saldo');
         Route::delete('/detail_saldo/delete/{id}', [DetailController::class, 'destroy'])->name('delete.detail_saldo');
+
+        //Aset
+        Route::get('laporan/aset', [AsetController::class, 'index'])->name('aset');
+        Route::post('/aset', [AsetController::class, 'store'])->name('add.aset');
+        Route::get('/aset/{id}/edit', [AsetController::class, 'edit'])->name('edit.aset');
+        Route::put('/aset', [AsetController::class, 'update'])->name('update.aset');
+        Route::delete('/aset/delete/{id}', [AsetController::class, 'destroy'])->name('delete.aset');
     });
 
     Route::group(['middleware' => ['role:administrator|gudang']], function () {

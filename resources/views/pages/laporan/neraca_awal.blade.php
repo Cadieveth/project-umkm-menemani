@@ -57,8 +57,8 @@
                             <div class="row ">
                                 {{-- AKTIVA  --}}
                                 <div class="col-sm-6 ">
-                                    <center> <span class="text-uppercase"><b>aktiva</b></span></center>
-                                    <span class="text-capitalize"><b>aktiva lancar</b></span>
+                                    <center> <span class="text-uppercase"><b>Aktiva</b></span></center>
+                                    <span class="text-capitalize"><b>Aktiva Lancar</b></span>
                                     <div class="row mb-3">
                                         <div class="col-sm-6">
                                             <span>Kas</span>
@@ -106,15 +106,26 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <span class="text-capitalize invisible"><b>aktiva Tetap</b></span>
-                                    <div class="row mb-3 invisible">
+
+                                    <span class="text-capitalize"><b>Aktiva Tetap</b></span>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-6">
+                                            <span><a href="{{ route('aset') }}">Peralatan</a></span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @if ($saldoAset)
+                                                <span>{{ 'Rp ' . number_format($saldoAset, 0, ',', '.') }}</span>
+                                            @else
+                                                <span>{{ 'Rp ' . number_format(0, 0, ',', '.') }}</span>
+                                            @endif
+                                        </div>
                                         <div class="col-sm-6">
                                             <span><b>Jumlah</b></span>
                                         </div>
                                         <div class="col-sm-6 ">
                                             <span><u class="mt-2">
-                                                    @if ($totalPersediaan)
-                                                        <span><b>{{ 'Rp ' . number_format($totalPersediaan, 0, ',', '.') }}</b></span>
+                                                    @if ($saldoAset)
+                                                        <span><b>{{ 'Rp ' . number_format($saldoAset, 0, ',', '.') }}</b></span>
                                                     @else
                                                         <span><b>{{ 'Rp ' . number_format(0, 0, ',', '.') }}</b></span>
                                                     @endif
@@ -123,6 +134,7 @@
                                             </span>
                                         </div>
                                     </div>
+
                                     <div class="row mb-3">
                                         <div class="col-sm-6">
                                             <span><b>Total Aktiva</b></span>
@@ -196,6 +208,12 @@
                                                 @endif
                                             </span>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-6 invisible">
+                                        <span>Laba / Rugi</span>
+                                    </div>
+                                    <div class="col-sm-6 invisible">
+                                        <span></span>
                                     </div>
                                     <div class="col-sm-6 invisible">
                                         <span>Laba / Rugi</span>

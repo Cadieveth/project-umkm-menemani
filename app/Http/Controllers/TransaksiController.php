@@ -220,14 +220,26 @@ class TransaksiController extends Controller
     {
         $no_jurnal = "JU" . rand(001, 999);
 
-        Laporan::create([
-            'no_jurnal' => $no_jurnal,
-            'ket' => $request->ket,
-            'akun_debet' => $request->akun,
-            'debit' => $request->nominal,
-            'akun_kredit' => 'Kas',
-            'kredit' => $request->nominal,
-        ]);
+        // Cek apakah $request->akun adalah "Beban Penyusutan Peralatan" atau 10
+        if ($request->akun === "Beban Penyusutan Peralatan" || $request->akun == 10) {
+            Laporan::create([
+                'no_jurnal' => $no_jurnal,
+                'ket' => $request->ket,
+                'akun_debet' => $request->akun,
+                'debit' => $request->nominal,
+                'akun_kredit' => 'Akumulasi Penyusutan Peralatan', // Kredit ke akun Akumulasi Penyusutan Peralatan
+                'kredit' => $request->nominal,
+            ]);
+        } else {
+            Laporan::create([
+                'no_jurnal' => $no_jurnal,
+                'ket' => $request->ket,
+                'akun_debet' => $request->akun,
+                'debit' => $request->nominal,
+                'akun_kredit' => 'Kas', // Kredit ke akun Kas
+                'kredit' => $request->nominal,
+            ]);
+        }
 
         return redirect()->route('kas')
             ->with('success', 'Pencatatan Kas Keluar Berhasil');
@@ -240,16 +252,37 @@ class TransaksiController extends Controller
     }
 
     public function update_kas(Request $request)
-    {
-        $kas = Laporan::findOrFail($request->id);
-        $kas->akun_debet = $request->akun;
-        $kas->debit = $request->nominal;
-        $kas->ket = $request->ket;
+{
+    $kas = Laporan::findOrFail($request->id);
 
-        $kas->save();
+    // Simpan nilai lama akun_debet untuk pengecekan
+    $oldAkunDebet = $kas->akun_debet;
 
-        return redirect()->back()->with('success', 'Data Kas Keluar Berhasil diubah');
+    // Perbarui nilai akun_debet, debit, dan ket
+    $kas->akun_debet = $request->akun;
+    $kas->debit = $request->nominal;
+    $kas->ket = $request->ket;
+    $kas->kredit = $request->nominal;
+
+    // Cek dan ubah akun_kredit berdasarkan nilai baru akun_debet
+    if ($request->akun === "Beban Penyusutan Peralatan" || $request->akun == 10) {
+        $kas->akun_kredit = 'Akumulasi Penyusutan Peralatan';
+    } else {
+        $kas->akun_kredit = 'Kas';
     }
+
+    // Cek apakah akun_debet diubah dari "Beban Penyusutan Peralatan" atau 10 ke yang lain
+    if ($oldAkunDebet === "Beban Penyusutan Peralatan" || $oldAkunDebet == 10) {
+        // Jika sebelumnya adalah "Beban Penyusutan Peralatan" atau 10, dan sekarang berubah
+        if ($request->akun !== "Beban Penyusutan Peralatan" && $request->akun != 10) {
+            $kas->akun_kredit = 'Kas'; // Set akun_kredit ke Kas
+        }
+    }
+
+    $kas->save();
+
+    return redirect()->back()->with('success', 'Data Kas Keluar Berhasil diubah');
+}
 
     public function destroy_kas($id)
     {

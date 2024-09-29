@@ -37,19 +37,23 @@ class ProductController extends Controller
     public function masuk()
     {
         $stok_masuk = StokMasuk::with('baku', 'supplier')->orderBy('created_at', 'asc')->get();
+
+        // // dd($stok_masuk);
         $suppliers = Supplier::get();
-        $produks = BahanBaku::get();
+        // $produks = BahanBaku::get();
         $baku = BahanBaku::get();
         $produks = $baku->groupBy('name')->map(function ($group) {
             return $group[0];
         });
         // Mengubah hasil menjadi koleksi
         $bakus = collect($produks->values());
-        $setting = Setting::first();
 
+        $setting = Setting::first();
         $title = "Product - Barang Masuk";
         $judul = "Barang Masuk";
-        return view('pages.product.masuk', compact('setting', 'title', 'judul', 'stok_masuk', 'suppliers', 'produks', 'bakus'));
+
+        // dd($stok_masuk);
+        return view('pages.product.masuk', compact('setting', 'title', 'judul', 'stok_masuk', 'suppliers', 'bakus', 'produks'));
     }
 
     public function masuk_store(Request $request)

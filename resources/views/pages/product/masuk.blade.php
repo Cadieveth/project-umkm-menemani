@@ -35,6 +35,7 @@
                             <th>Nama Barang</th>
                             <th>Satuan</th>
                             <th>Qty</th>
+                            <th>Harga Satuan</th>
                             <th>Supplier</th>
                             <th>Keterangan</th>
                             <th>Action</th>
@@ -57,6 +58,9 @@
                     </tfoot> --}}
                     <tbody>
                         @foreach ($stok_masuk as $p)
+                            {{-- @php
+                                dd($stok_masuk);
+                            @endphp --}}
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ date('d F Y', strtotime($p->created_at)) }}</td>
@@ -65,9 +69,8 @@
                                 <td>{{ $p->baku->name }}</td>
                                 <td>{{ $p->baku->satuan }}</td>
                                 <td>{{ $p->stok_masuk }}</td>
-                                <td>
-                                    {{ $p->supplier->name }}
-                                </td>
+                                <td>{{ 'Rp ' . number_format($p->baku->harga, 0, ',', '.') }}</td>
+                                <td>{{ $p->supplier->name }}</td>
                                 <td>{{ $p->keterangan }}</td>
                                 <td>
                                     <a href="#" data-toggle="modal" data-target="#masukModalEdit"
@@ -311,7 +314,7 @@
                     success: function(data) {
                         $('#editMasukId').val(data.id);
                         $('#editMasukProduk').val(data
-                        .baku_id); // Set value for select Nama Barang
+                            .baku_id); // Set value for select Nama Barang
                         $('#editMasukSupplier').val(data.supplier_id);
                         $('#editMasukInvoice').val(data.invoice);
                         $('#editMasukJml_masuk').val(data.stok_masuk);
@@ -319,7 +322,7 @@
 
                         // Memilih opsi yang sesuai berdasarkan data.baku_id
                         $('#editMasukProduk option').removeAttr(
-                        'selected'); // Menghapus 'selected' dari semua option
+                            'selected'); // Menghapus 'selected' dari semua option
                         $('#editMasukProduk option[value="' + data.baku_id + '"]').attr(
                             'selected', 'selected');
 

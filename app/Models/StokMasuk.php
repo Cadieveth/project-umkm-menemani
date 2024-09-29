@@ -23,11 +23,12 @@ class StokMasuk extends Model
 
     public function baku()
     {
-        return $this->belongsTo(BahanBaku::class);
+        return $this->belongsTo(BahanBaku::class, 'baku_id', 'id');
     }
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class, 'supplier_id');
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
     }
+
 }

@@ -157,11 +157,14 @@ class LaporanController extends Controller
         $awalHutangKredit = $awalHutang ? $awalHutang->kredit : 0;
 
         // Modal Awal
-        $totalDebitNA = NeracaAwal::whereIn('akun_debet', ['Kas', 'Persediaan Bahan Baku', 'Persediaan Produk Jadi'])
+        $totalDebitNA = NeracaAwal::whereIn('akun_debet', ['Kas', 'Persediaan Bahan Baku', 'Persediaan Produk Jadi', 'Peralatan'])
             ->sum('debit');
 
         $totalKreditNA = NeracaAwal::where('akun_kredit', 'Hutang Gaji')
             ->sum('kredit');
+
+        $peralatan = NeracaAwal::where('akun_debet', 'Peralatan')
+            ->sum('debit');
 
         // Laba/Rugi
         $transaksi = Transaksi::select(
@@ -190,6 +193,10 @@ class LaporanController extends Controller
             ->sum(DB::raw('debit'));
         $bebanUsaha = $kass;
 
+        $akm = Laporan::whereIn('akun_debet', $masterName)
+            ->where('akun_debet', 'Beban Penyusutan Peralatan')
+            ->sum('kredit'); // Menjumlahkan kolom 'kredit'
+
         $hppOperation = Laporan::where('akun_hpp', 'HPP')
             ->select('akun_hpp', 'hpp', 'no_jurnal', 'ket', 'created_at')
             ->sum('hpp');
@@ -213,14 +220,14 @@ class LaporanController extends Controller
         // Perhitungan jumlah Saldo
         $jumlahLiabilitas = $saldoHutang;
         $jumlahEkuitas = $saldoModal + $saldoLabaRugi;
-        $jumlahAktivaTetap = $saldoPbb + $saldoPpj;
-        $jumalhAktivaLancar = $saldoKas;
+        $jumlahAktivaTetap = $peralatan - $akm;
+        $jumalhAktivaLancar = $saldoKas + $saldoPbb + $saldoPpj;
 
         // Balance Kanan-Kiri
         $totalKanan = $jumlahLiabilitas + $jumlahEkuitas;
         $totalKiri = $jumlahAktivaTetap + $jumalhAktivaLancar;
 
-        return view('pages.laporan.neraca', compact('setting', 'judul', 'title', 'bulanTahun', 'selectedBulanTahun', 'saldoHutang', 'saldoModal', 'saldoLabaRugi', 'jumlahLiabilitas', 'jumlahEkuitas', 'totalKanan', 'saldoPbb', 'saldoPpj', 'jumlahAktivaTetap', 'saldoKas', 'jumalhAktivaLancar', 'totalKiri'));
+        return view('pages.laporan.neraca', compact('akm', 'peralatan', 'setting', 'judul', 'title', 'bulanTahun', 'selectedBulanTahun', 'saldoHutang', 'saldoModal', 'saldoLabaRugi', 'jumlahLiabilitas', 'jumlahEkuitas', 'totalKanan', 'saldoPbb', 'saldoPpj', 'jumlahAktivaTetap', 'saldoKas', 'jumalhAktivaLancar', 'totalKiri'));
     }
 
     private function calculatePBB()
@@ -664,7 +671,7 @@ class LaporanController extends Controller
             ->sum(DB::raw('hpp'));
 
         // Hitung total debit untuk akun_debet yang diinginkan
-        $totalDebit = NeracaAwal::whereIn('akun_debet', ['Kas', 'Persediaan Bahan Baku', 'Persediaan Produk Jadi'])
+        $totalDebit = NeracaAwal::whereIn('akun_debet', ['Kas', 'Persediaan Bahan Baku', 'Persediaan Produk Jadi', 'Peralatan'])
             ->sum('debit');
 
         // Hitung total kredit untuk akun_kredit yang diinginkan
@@ -787,6 +794,11 @@ class LaporanController extends Controller
             ->select('akun_hpp', 'hpp', 'no_jurnal', 'ket', 'created_at')
             ->get();
 
+        // Aset
+        $awalAset = NeracaAwal::where('akun_debet', 'Peralatan')
+            ->select('debit')
+            ->first();
+
         // HUTANG GAJI
         $hutang = Laporan::where('akun_debet', 'Hutang Gaji')
             ->orWhere('akun_kredit', 'Hutang Gaji')
@@ -806,6 +818,11 @@ class LaporanController extends Controller
             ->select('akun_debet', 'debit', 'no_jurnal', 'ket', 'created_at')
             ->get();
 
+        $akm = Laporan::whereIn('akun_debet', $masterName)
+            ->where('akun_debet', 'Beban Penyusutan Peralatan')
+            ->select('akun_kredit', 'kredit', 'no_jurnal', 'ket', 'created_at')
+            ->get();
+
         // KAS
         $laporans = Laporan::where(function ($query) use ($masterName) {
             $query->whereIn('akun_debet', $masterName)
@@ -813,6 +830,7 @@ class LaporanController extends Controller
                 ->orWhere('akun_debet', 'Kas')
                 ->orWhere('akun_kredit', 'Kas');
         })
+            ->where('akun_debet', '!=', 'Beban Penyusutan Peralatan') // Mengecualikan "Beban Penyusutan Peralatan"
             ->select('akun_debet', 'debit', 'akun_kredit', 'kredit', 'no_jurnal', 'ket', 'created_at')
             ->get();
 
@@ -923,6 +941,6 @@ class LaporanController extends Controller
             ->select('debit')
             ->first();
 
-        return view('pages.laporan.buku_besar', compact('btkl', 'awalHutang', 'hutang', 'mergePbb', 'modalAwal', 'setting', 'title', 'judul', 'awalKas', 'awalPpj', 'ppj', 'awalPbb', 'hpps', 'laporans', 'penjualan', 'beli', 'beban', 'masters', 'masterName', 'hpp'));
+        return view('pages.laporan.buku_besar', compact('akm', 'awalAset', 'btkl', 'awalHutang', 'hutang', 'mergePbb', 'modalAwal', 'setting', 'title', 'judul', 'awalKas', 'awalPpj', 'ppj', 'awalPbb', 'hpps', 'laporans', 'penjualan', 'beli', 'beban', 'masters', 'masterName', 'hpp'));
     }
 }

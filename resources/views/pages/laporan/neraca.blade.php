@@ -41,6 +41,19 @@
                                             <span>{{ 'Rp ' . number_format($saldoKas, 0, ',', '.') }}</span>
                                         </div>
                                         <div class="col-sm-6">
+                                            <span>Persediaan Bahan Baku</span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <span>{{ 'Rp ' . number_format($saldoPbb, 0, ',', '.') }}</span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <span>Persediaan Produk Jadi</span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <span><u>{{ 'Rp ' . number_format($saldoPpj, 0, ',', '.') }}</u></span>
+                                            <sub>+</sub>
+                                        </div>
+                                        <div class="col-sm-6">
                                             <span><b>Jumlah</b></span>
                                         </div>
                                         <div class="col-sm-6">
@@ -50,26 +63,28 @@
                                     <span class="text-capitalize"><b>aktiva Tetap</b></span>
                                     <div class="row mb-3">
                                         <div class="col-sm-6">
-                                            <span>Persediaan Bahan Baku</span>
+                                            <span>Peralatan</span>
+                                        </div>
+                                        <div class="col-sm-6 ">
+                                            <span>
+                                                {{ 'Rp ' . number_format($peralatan, 0, ',', '.') }}
+                                            </span>
                                         </div>
                                         <div class="col-sm-6">
-                                            <span>{{ 'Rp ' . number_format($saldoPbb, 0, ',', '.') }}</span>
-
+                                            <span>Akm. Penyusutan Peralatan</span>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <span>Persediaan Produk Jadi</span>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <span>{{ 'Rp ' . number_format($saldoPpj, 0, ',', '.') }}</span>
-
+                                        <div class="col-sm-6 ">
+                                            <span><u class="mt-2">
+                                                    {{ 'Rp ' . number_format($akm, 0, ',', '.') }}</u>
+                                                <sub>-</sub>
+                                            </span>
                                         </div>
                                         <div class="col-sm-6">
                                             <span><b>Jumlah</b></span>
                                         </div>
                                         <div class="col-sm-6 ">
-                                            <span><u class="mt-2">
-                                                    <b>{{ 'Rp ' . number_format($jumlahAktivaTetap, 0, ',', '.') }}</b></u>
-                                                <sub>+</sub>
+                                            <span>
+                                                <b>{{ 'Rp ' . number_format($jumlahAktivaTetap, 0, ',', '.') }}</b>
                                             </span>
                                         </div>
                                     </div>
@@ -136,6 +151,18 @@
                                             <span>
                                                 <b>{{ 'Rp ' . number_format($jumlahEkuitas, 0, ',', '.') }}</b>
                                             </span>
+                                        </div>
+                                        <div class="col-sm-6 invisible">
+                                            <span><b>Jumlah</b></span>
+                                        </div>
+                                        <div class="col-sm-6 invisible">
+                                            <span></span>
+                                        </div>
+                                        <div class="col-sm-6 invisible">
+                                            <span><b>Jumlah</b></span>
+                                        </div>
+                                        <div class="col-sm-6 invisible">
+                                            <span></span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
