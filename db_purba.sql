@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2024 at 06:20 PM
+-- Generation Time: Sep 29, 2024 at 11:27 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_purba`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `asets`
+--
+
+CREATE TABLE `asets` (
+  `id` bigint(25) NOT NULL,
+  `kode_aset` varchar(255) NOT NULL,
+  `nama_aset` varchar(255) NOT NULL,
+  `jumlah_aset` int(25) NOT NULL,
+  `harga_aset` float NOT NULL,
+  `created_at` date NOT NULL,
+  `updated_at` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -159,7 +175,8 @@ CREATE TABLE `masters` (
 INSERT INTO `masters` (`id`, `name`, `kategori`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (7, 'Hutang Gaji', 'Kewajiban', '2024-09-19 11:04:58', '2024-09-19 11:04:58', NULL),
 (8, 'Beban Listrik, Air dan Telepon', 'Beban', '2024-09-19 11:06:25', '2024-09-19 11:06:25', NULL),
-(9, 'Beban Pengiriman', 'Beban', '2024-09-19 11:14:33', '2024-09-19 11:14:33', NULL);
+(9, 'Beban Pengiriman', 'Beban', '2024-09-19 11:14:33', '2024-09-19 11:14:33', NULL),
+(10, 'Beban Penyusutan Peralatan', 'Beban', '2024-09-29 20:22:25', '2024-09-29 20:22:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -582,6 +599,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `gender`, `email_verified_at`, `pass
 --
 
 --
+-- Indexes for table `asets`
+--
+ALTER TABLE `asets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `bahan_bakus`
 --
 ALTER TABLE `bahan_bakus`
@@ -751,16 +774,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `asets`
+--
+ALTER TABLE `asets`
+  MODIFY `id` bigint(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `bahan_bakus`
 --
 ALTER TABLE `bahan_bakus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `details`
 --
 ALTER TABLE `details`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -784,7 +813,7 @@ ALTER TABLE `kas_keluars`
 -- AUTO_INCREMENT for table `laporans`
 --
 ALTER TABLE `laporans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=248;
 
 --
 -- AUTO_INCREMENT for table `margin`
@@ -796,7 +825,7 @@ ALTER TABLE `margin`
 -- AUTO_INCREMENT for table `masters`
 --
 ALTER TABLE `masters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -808,7 +837,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `neraca_awals`
 --
 ALTER TABLE `neraca_awals`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `order_stoks`
@@ -832,7 +861,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `product_sells`
 --
 ALTER TABLE `product_sells`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `reseps`
@@ -862,7 +891,7 @@ ALTER TABLE `stok_keluars`
 -- AUTO_INCREMENT for table `stok_masuks`
 --
 ALTER TABLE `stok_masuks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
