@@ -252,37 +252,38 @@ class TransaksiController extends Controller
     }
 
     public function update_kas(Request $request)
-{
-    $kas = Laporan::findOrFail($request->id);
+    {
+        //minta id dari Laporan
+        $kas = Laporan::findOrFail($request->id);
 
-    // Simpan nilai lama akun_debet untuk pengecekan
-    $oldAkunDebet = $kas->akun_debet;
+        // Simpan nilai lama akun_debet untuk pengecekan
+        $oldAkunDebet = $kas->akun_debet;
 
-    // Perbarui nilai akun_debet, debit, dan ket
-    $kas->akun_debet = $request->akun;
-    $kas->debit = $request->nominal;
-    $kas->ket = $request->ket;
-    $kas->kredit = $request->nominal;
+        // Perbarui nilai akun_debet, debit, dan ket
+        $kas->akun_debet = $request->akun;
+        $kas->debit = $request->nominal;
+        $kas->ket = $request->ket;
+        $kas->kredit = $request->nominal;
 
-    // Cek dan ubah akun_kredit berdasarkan nilai baru akun_debet
-    if ($request->akun === "Beban Penyusutan Peralatan" || $request->akun == 10) {
-        $kas->akun_kredit = 'Akumulasi Penyusutan Peralatan';
-    } else {
-        $kas->akun_kredit = 'Kas';
-    }
-
-    // Cek apakah akun_debet diubah dari "Beban Penyusutan Peralatan" atau 10 ke yang lain
-    if ($oldAkunDebet === "Beban Penyusutan Peralatan" || $oldAkunDebet == 10) {
-        // Jika sebelumnya adalah "Beban Penyusutan Peralatan" atau 10, dan sekarang berubah
-        if ($request->akun !== "Beban Penyusutan Peralatan" && $request->akun != 10) {
-            $kas->akun_kredit = 'Kas'; // Set akun_kredit ke Kas
+        // Cek dan ubah akun_kredit berdasarkan nilai baru akun_debet
+        if ($request->akun === "Beban Penyusutan Peralatan" || $request->akun == 10) {
+            $kas->akun_kredit = 'Akumulasi Penyusutan Peralatan';
+        } else {
+            $kas->akun_kredit = 'Kas';
         }
+
+        // Cek apakah akun_debet diubah dari "Beban Penyusutan Peralatan" atau 10 ke yang lain
+        if ($oldAkunDebet === "Beban Penyusutan Peralatan" || $oldAkunDebet == 10) {
+            // Jika sebelumnya adalah "Beban Penyusutan Peralatan" atau 10, dan sekarang berubah
+            if ($request->akun !== "Beban Penyusutan Peralatan" && $request->akun != 10) {
+                $kas->akun_kredit = 'Kas'; // Set akun_kredit ke Kas
+            }
+        }
+
+        $kas->save();
+
+        return redirect()->back()->with('success', 'Data Kas Keluar Berhasil diubah');
     }
-
-    $kas->save();
-
-    return redirect()->back()->with('success', 'Data Kas Keluar Berhasil diubah');
-}
 
     public function destroy_kas($id)
     {
